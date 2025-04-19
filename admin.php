@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Verifica se o usuário está logado
 if (!isset($_SESSION['usuario'])) {
     header("Location: login.php");
     exit;
@@ -9,7 +8,6 @@ if (!isset($_SESSION['usuario'])) {
 
 $conn = new mysqli("localhost", "root", "", "mercado");
 
-// Filtro
 $filtro = "";
 $where = "";
 
@@ -18,27 +16,21 @@ if (isset($_GET['busca']) && !empty($_GET['busca'])) {
     $where = "WHERE nome LIKE '%$filtro%' OR email LIKE '%$filtro%'";
 }
 
-// Paginação
 $limite = 5;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $inicio = ($pagina - 1) * $limite;
 
-// Ordenação
 $colunasValidas = ['nome', 'email', 'data_envio'];
 $ordem = in_array($_GET['ordem'] ?? '', $colunasValidas) ? $_GET['ordem'] : 'data_envio';
 $direcao = ($_GET['direcao'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
 $novaDirecao = $direcao === 'ASC' ? 'DESC' : 'ASC';
 
-
-// Consulta com filtro e limite
 $sql = "SELECT * FROM emails $where ORDER BY $ordem $direcao LIMIT $inicio, $limite";
 $resultado = $conn->query($sql);
 
-// Total de registros para paginação
 $totalRegistros = $conn->query("SELECT COUNT(*) AS total FROM emails $where")->fetch_assoc()['total'];
 $totalPaginas = ceil($totalRegistros / $limite);
 
-// Exclusão
 if (isset($_GET['excluir'])) {
     $idExcluir = (int)$_GET['excluir'];
     $conn->query("DELETE FROM emails WHERE id = $idExcluir");
@@ -70,6 +62,8 @@ if (isset($_GET['excluir'])) {
         th, td {
             padding: 10px;
             border: 1px solid #ddd;
+            text-align: center;
+            vertical-align: middle;
         }
         th {
             background: #00a859;
@@ -112,15 +106,25 @@ if (isset($_GET['excluir'])) {
             border: none;
             border-radius: 4px;
         }
+
+        .acoes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
         .excluir, .responder {
             color: #00a859;
             text-decoration: none;
             padding: 5px 10px;
-        }
-        .excluir:hover, .responder:hover {
-            background-color: #f1f1f1;
             border-radius: 5px;
         }
+
+        .excluir:hover, .responder:hover {
+            background-color: #f1f1f1;
+        }
+
         .paginacao {
             margin-top: 20px;
         }
@@ -148,37 +152,38 @@ if (isset($_GET['excluir'])) {
         <input type="text" name="busca" placeholder="Buscar por nome ou e-mail" value="<?= htmlspecialchars($filtro) ?>">
         <button type="submit">Buscar</button>
     </form>
+
     <form method="GET" action="exportar_excel.php">
         <button type="submit" style="margin-top: 10px; background: #0077cc; color: white; padding: 8px 12px; border: none; border-radius: 4px;">Exportar para Excel</button>
     </form>
 
     <table>
-    <thead>
-    <tr>
-        <th><a href="?ordem=nome&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Nome</a></th>
-        <th><a href="?ordem=email&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">E-mail</a></th>
-        <th>Mensagem</th>
-        <th><a href="?ordem=data_envio&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Data</a></th>
-        <th>Ação</th>
-    </tr>
-    </thead>
-
-    <tbody>
-        <?php while ($linha = $resultado->fetch_assoc()) : ?>
+        <thead>
             <tr>
-                <td><?= htmlspecialchars($linha['nome']) ?></td>
-                <td><?= htmlspecialchars($linha['email']) ?></td>
-                <td><?= nl2br(htmlspecialchars($linha['mensagem'])) ?></td>
-                <td><?= $linha['data_envio'] ?></td>
-                <td>
-                    <!-- Responder -->
-                    <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a> |
-                    <!-- Excluir -->
-                    <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
-                </td>
+                <th><a href="?ordem=nome&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Nome</a></th>
+                <th><a href="?ordem=email&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">E-mail</a></th>
+                <th>Mensagem</th>
+                <th><a href="?ordem=data_envio&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Data</a></th>
+                <th>Ação</th>
             </tr>
-        <?php endwhile; ?>
-    </tbody>
+        </thead>
+        <tbody>
+            <?php while ($linha = $resultado->fetch_assoc()) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($linha['nome']) ?></td>
+                    <td><?= htmlspecialchars($linha['email']) ?></td>
+                    <td><?= nl2br(htmlspecialchars($linha['mensagem'])) ?></td>
+                    <td><?= $linha['data_envio'] ?></td>
+                    <td>
+                    <div class="acoes">
+                        <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a>
+                        <span class="divisor">|</span>
+                        <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+                    </div>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
     </table>
 
     <div class="paginacao">

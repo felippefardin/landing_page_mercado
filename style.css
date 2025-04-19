@@ -172,6 +172,11 @@ footer .redes-sociais a {
 footer .redes-sociais a:hover {
     background: #007b44;
 }
+.divisor {
+    color: #aaa;
+    margin: 0 5px;
+    font-weight: bold;
+}
 
 @media (max-width: 768px) {
     .header-conteudo {
