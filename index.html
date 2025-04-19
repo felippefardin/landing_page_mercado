@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mercado - Tudo o que você precisa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-conteudo">
+            <img src="img/cliente.png" alt="Logo Mercado" class="logo">
+    
+            <div class="header-textos">
+                <h1>Mercado</h1>
+                <p class="slogan">Tudo o que você precisa, em um só lugar.</p>
+            </div>
+    
+            <a href="#formulario" class="btn">Conheça Agora</a>
+        </div>
+    </header>
+
+    <section class="sobre">
+        <h2>Sobre o Mercado</h2>
+        <p>O Mercado é sua nova solução para encontrar tudo em um só lugar: alimentos frescos, limpeza, higiene, bebidas e muito mais.</p>
+        <ul>
+            <li>Entrega rápida e segura</li>
+            <li>Produtos sempre frescos</li>
+            <li>Atendimento humanizado</li>
+            <li>Preços acessíveis e promoções exclusivas</li>
+        </ul>
+    </section>
+
+    <section class="produto">
+        <h2>Produto em Destaque</h2>
+        <img src="img/computer.png" alt="Produto em Destaque" class="imagem-produto">
+        <p>Este é o nosso produto especial, que está com uma promoção imperdível!</p>
+        <a href="produto_detalhes.php" class="btn">Ver Mais</a>
+    </section>
+
+    <section class="formulario" id="formulario">
+        <h2>Fale Conosco</h2>
+        <form action="processa_formulario.php" method="POST">
+            <input type="text" name="nome" placeholder="Seu nome" class="campo-fixo" required>
+            <input type="email" name="email" placeholder="Seu e-mail" class="campo-fixo" required>
+            <textarea name="mensagem" class="mensagem-fixa" placeholder="Sua mensagem" required></textarea>
+            <button type="submit" class="botao-fixo">Enviar</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Mercado - Todos os direitos reservados</p>
+        <div class="redes-sociais">
+            <a href="https://instagram.com/suaempresa" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com/suaempresa" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://twitter.com/suaempresa" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://youtube.com/suaempresa" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

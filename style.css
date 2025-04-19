@@ -1,0 +1,190 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.header-conteudo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 110px;
+    height: auto;
+}
+
+.header-textos {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+h1 {
+    font-size: 36px;
+    margin: 0;
+}
+
+.slogan {
+    font-size: 18px;
+    color: #e0e0e0;
+    margin: 0;
+}
+
+.btn {
+    background-color: white;
+    color: #4CAF50;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.btn:hover {
+    background-color: #e6e6e6;
+}
+
+section {
+    padding: 30px;
+    background-color: white;
+    margin: 20px auto;
+    border-radius: 8px;
+    max-width: 900px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li::before {
+    content: "✔️ ";
+    margin-right: 5px;
+}
+
+.card {
+    background-color: #eee;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px 0;
+}
+
+.produto {
+    background-color: #e1f5e2;
+    text-align: center;
+}
+
+.imagem-produto {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input, textarea {
+    border: 1px solid #ccc;
+}
+
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #388E3C;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #4CAF50;
+    color: white;
+}
+
+footer .redes-sociais {
+    margin-top: 10px;
+}
+
+footer .redes-sociais a {
+    color: #fff;
+    background: #00a859;
+    padding: 15px;
+    margin: 0 5px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    transition: background 0.3s ease;
+}
+
+footer .redes-sociais a:hover {
+    background: #007b44;
+}
+
+@media (max-width: 768px) {
+    .header-conteudo {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .btn {
+        margin-top: 10px;
+    }
+}
