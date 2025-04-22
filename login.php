@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login - Mercado</title>
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
     <div class="container">
@@ -45,6 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="email" name="email" placeholder="Seu e-mail" required>
             <input type="password" name="senha" placeholder="Sua senha" required>
             <button type="submit">Entrar</button>
+            <p><a href="esqueci_senha.php">Esqueci minha senha?</a></p>
+
         </form>
 
         <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>

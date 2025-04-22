@@ -13,14 +13,14 @@ $where = "";
 
 if (isset($_GET['busca']) && !empty($_GET['busca'])) {
     $filtro = $conn->real_escape_string($_GET['busca']);
-    $where = "WHERE nome LIKE '%$filtro%' OR email LIKE '%$filtro%'";
+    $where = "WHERE nome LIKE '%$filtro%' OR email LIKE '%$filtro%' OR whatsapp LIKE '%$filtro%'";
 }
 
 $limite = 5;
 $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 $inicio = ($pagina - 1) * $limite;
 
-$colunasValidas = ['nome', 'email', 'data_envio'];
+$colunasValidas = ['nome', 'email', 'whatsapp', 'data_envio'];
 $ordem = in_array($_GET['ordem'] ?? '', $colunasValidas) ? $_GET['ordem'] : 'data_envio';
 $direcao = ($_GET['direcao'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
 $novaDirecao = $direcao === 'ASC' ? 'DESC' : 'ASC';
@@ -44,6 +44,7 @@ if (isset($_GET['excluir'])) {
 <head>
     <meta charset="UTF-8">
     <title>Painel Administrativo</title>
+    <link rel="shortcut icon" href="img/atalho.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -74,14 +75,14 @@ if (isset($_GET['excluir'])) {
         }
 
         th a {
-            color: inherit;       
-            text-decoration: none; 
+            color: inherit;
+            text-decoration: none;
             font-weight: bold;
         }
 
         th a:hover {
-            text-decoration: underline; 
-            color: #ffffffff;             
+            text-decoration: underline;
+            color: #fff;
         }
 
         .logout {
@@ -92,6 +93,7 @@ if (isset($_GET['excluir'])) {
             text-decoration: none;
             border-radius: 5px;
         }
+
         .busca {
             margin-top: 20px;
         }
@@ -149,19 +151,31 @@ if (isset($_GET['excluir'])) {
     <h2>Mensagens Recebidas</h2>
 
     <form class="busca" method="GET" action="admin.php">
-        <input type="text" name="busca" placeholder="Buscar por nome ou e-mail" value="<?= htmlspecialchars($filtro) ?>">
+        <input type="text" name="busca" placeholder="Buscar por nome, e-mail ou WhatsApp" value="<?= htmlspecialchars($filtro) ?>">
         <button type="submit">Buscar</button>
     </form>
 
-    <form method="GET" action="exportar_excel.php">
-        <button type="submit" style="margin-top: 10px; background: #0077cc; color: white; padding: 8px 12px; border: none; border-radius: 4px;">Exportar para Excel</button>
+    <div style="margin-top: 10px;">
+    <form method="GET" action="exportar_excel.php" style="display:inline;">
+        <button type="submit" style="background: #0077cc; color: white; padding: 8px 12px; border: none; border-radius: 4px;">Exportar Excel</button>
     </form>
+
+    <form method="GET" action="exportar_pdf.php" style="display:inline;">
+        <button type="submit" style="background: #cc0000; color: white; padding: 8px 12px; border: none; border-radius: 4px;">Exportar PDF</button>
+    </form>
+
+    <form method="GET" action="exportar_csv.php" style="display:inline;">
+        <button type="submit" style="background: #00a859; color: white; padding: 8px 12px; border: none; border-radius: 4px;">Exportar CSV</button>
+    </form>
+</div>
+
 
     <table>
         <thead>
             <tr>
                 <th><a href="?ordem=nome&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Nome</a></th>
                 <th><a href="?ordem=email&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">E-mail</a></th>
+                <th><a href="?ordem=whatsapp&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">WhatsApp</a></th>
                 <th>Mensagem</th>
                 <th><a href="?ordem=data_envio&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Data</a></th>
                 <th>Ação</th>
@@ -172,14 +186,15 @@ if (isset($_GET['excluir'])) {
                 <tr>
                     <td><?= htmlspecialchars($linha['nome']) ?></td>
                     <td><?= htmlspecialchars($linha['email']) ?></td>
+                    <td><?= htmlspecialchars($linha['whatsapp']) ?></td>
                     <td><?= nl2br(htmlspecialchars($linha['mensagem'])) ?></td>
                     <td><?= $linha['data_envio'] ?></td>
                     <td>
-                    <div class="acoes">
-                        <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a>
-                        <span class="divisor">|</span>
-                        <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
-                    </div>
+                        <div class="acoes">
+                            <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a>
+                            <span class="divisor">|</span>
+                            <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+                        </div>
                     </td>
                 </tr>
             <?php endwhile; ?>

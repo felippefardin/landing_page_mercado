@@ -16,3 +16,34 @@ CREATE TABLE usuarios (
     senha VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE recuperacao_senha (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    codigo VARCHAR(6) NOT NULL,
+    expira_em DATETIME NOT NULL,
+    usado BOOLEAN DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS formularios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS campos_formulario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    formulario_id INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,  -- ex: text, email, number
+    obrigatorio BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (formulario_id) REFERENCES formularios(id)
+);
+
+CREATE TABLE recuperacoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    codigo VARCHAR(6) NOT NULL,
+    expira_em DATETIME NOT NULL
+);
+
+
+
