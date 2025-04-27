@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-felippefardin',
         'version' => 'dev-felippefardin',
-        'reference' => '6d52b11e0de5174bf4e0bea537974966e51bf254',
+        'reference' => 'e9e636cd1077586fc14cd601785ac0ae99be603e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-felippefardin',
             'version' => 'dev-felippefardin',
-            'reference' => '6d52b11e0de5174bf4e0bea537974966e51bf254',
+            'reference' => 'e9e636cd1077586fc14cd601785ac0ae99be603e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

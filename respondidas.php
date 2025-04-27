@@ -9,11 +9,11 @@ if (!isset($_SESSION['usuario'])) {
 $conn = new mysqli("localhost", "root", "", "mercado");
 
 $filtro = "";
-$where = "";
+$where = "WHERE respondida = 1";
 
 if (isset($_GET['busca']) && !empty($_GET['busca'])) {
     $filtro = $conn->real_escape_string($_GET['busca']);
-    $where = "WHERE nome LIKE '%$filtro%' OR email LIKE '%$filtro%' OR whatsapp LIKE '%$filtro%'";
+    $where .= " AND (nome LIKE '%$filtro%' OR email LIKE '%$filtro%' OR whatsapp LIKE '%$filtro%')";
 }
 
 $limite = 5;
@@ -25,45 +25,31 @@ $ordem = in_array($_GET['ordem'] ?? '', $colunasValidas) ? $_GET['ordem'] : 'dat
 $direcao = ($_GET['direcao'] ?? 'DESC') === 'ASC' ? 'ASC' : 'DESC';
 $novaDirecao = $direcao === 'ASC' ? 'DESC' : 'ASC';
 
-$sql = "SELECT * FROM emails WHERE respondida = 0 ORDER BY data_envio DESC LIMIT $inicio, $limite";
-
+$sql = "SELECT * FROM emails $where ORDER BY $ordem $direcao LIMIT $inicio, $limite";
 $resultado = $conn->query($sql);
 
 $totalRegistros = $conn->query("SELECT COUNT(*) AS total FROM emails $where")->fetch_assoc()['total'];
 $totalPaginas = ceil($totalRegistros / $limite);
 
+if (isset($_GET['retornar'])) {
+    $idRetornar = (int)$_GET['retornar'];
+    $conn->query("UPDATE emails SET respondida = 0 WHERE id = $idRetornar");
+    header("Location: respondidas.php");
+    exit;
+}
 if (isset($_GET['excluir'])) {
     $idExcluir = (int)$_GET['excluir'];
     $conn->query("DELETE FROM emails WHERE id = $idExcluir");
-    header("Location: admin.php");
+    header("Location: respondidas.php");
     exit;
 }
-if (isset($_GET['marcar_respondida'])) {
-    $idRespondida = (int)$_GET['marcar_respondida'];
-    
-    // Atualiza o campo 'respondida' para 1
-    if ($conn->query("UPDATE emails SET respondida = 1 WHERE id = $idRespondida")) {
-        echo "Mensagem marcada como respondida!";
-    } else {
-        echo "Erro ao atualizar a mensagem.";
-    }
-    
-    // Após a atualização, redireciona para a mesma página para atualizar a lista
-    header("Location: admin.php?pagina=$pagina&busca=" . urlencode($filtro));
-
-    exit;
-}
-
-
-
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Painel Administrativo</title>
+    <title>Mensagens Respondidas</title>
     <link rel="shortcut icon" href="img/atalho.png">
     <style>
         body {
@@ -163,58 +149,17 @@ if (isset($_GET['marcar_respondida'])) {
             color: white;
         }
 
-        /* Estilos para os botões de exportação */
-        .busca button:hover {
-            opacity: 0.8;
-        }
-
-        .acoes a:hover {
-            background-color: #f1f1f1;
-        }
-
-        .exportar-button {
-            padding: 8px 12px;
-            border-radius: 4px;
-            text-decoration: none;
-            color: white;
-        }
-
-        .excel {
-            background: #0077cc;
-        }
-
-        .excel:hover {
-            background: #006bb3;
-        }
-
-        .pdf {
-            background: #cc0000;
-        }
-
-        .pdf:hover {
-            background: #b30000;
-        }
-
-        .csv {
-            background: #00a859;
-        }
-
-        .csv:hover {
-            background: #009848;
-        }
-        .marcar-respondida {
+    
+        .acoes a {
     color: #00a859;
     text-decoration: none;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 5px;    
 }
 
-.marcar-respondida:hover {
+.acoes a:hover {
     background-color: #f1f1f1;
-}
-/* Estilos para centralizar o botão */
-
-
+}   
 .marcar-respondida2 {
     display: inline-block;
     background-color: #00a859;
@@ -251,13 +196,12 @@ if (isset($_GET['marcar_respondida'])) {
     background-color: #008c44;
 }
 
-
     </style>
 </head>
 <body>
 
-    <a href="logout.php" class="logout">Sair</a>
-    <h1>Bem-vindo, <?= ucwords(strtolower($_SESSION['usuario'])) ?>!</h1>
+<a href="logout.php" class="logout">Sair</a>
+    <h1>Olá, <?= ucwords(strtolower($_SESSION['usuario'])) ?>!</h1>
     <h2>Mensagens Recebidas</h2>
 
     <form class="busca" method="GET" action="admin.php">
@@ -265,28 +209,14 @@ if (isset($_GET['marcar_respondida'])) {
         <button type="submit">Buscar</button>
     </form>
 
-    <div style="margin-top: 10px;">
-        <form method="GET" action="exportar_excel.php" style="display:inline;">
-            <button type="submit" class="exportar-button excel">Exportar Excel</button>
-        </form>
-
-        <form method="GET" action="exportar_pdf.php" style="display:inline;">
-            <button type="submit" class="exportar-button pdf">Exportar PDF</button>
-        </form>
-
-        <form method="GET" action="exportar_csv.php" style="display:inline;">
-            <button type="submit" class="exportar-button csv">Exportar CSV</button>
-        </form>
-    </div>
-
     <table>
         <thead>
             <tr>
-                <th><a href="?ordem=nome&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Nome</a></th>
-                <th><a href="?ordem=email&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">E-mail</a></th>
-                <th><a href="?ordem=whatsapp&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">WhatsApp</a></th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>WhatsApp</th>
                 <th>Mensagem</th>
-                <th><a href="?ordem=data_envio&direcao=<?= $novaDirecao ?>&busca=<?= urlencode($filtro) ?>">Data</a></th>
+                <th>Data</th>
                 <th>Ação</th>
             </tr>
         </thead>
@@ -299,32 +229,35 @@ if (isset($_GET['marcar_respondida'])) {
                     <td><?= nl2br(htmlspecialchars($linha['mensagem'])) ?></td>
                     <td><?= $linha['data_envio'] ?></td>
                     <td>
-    <div class="acoes">
-        <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a>
-        <span class="divisor">|</span>
-        <?php if ($linha['respondida'] == 0): ?>
-            <a href="admin.php?marcar_respondida=<?= $linha['id'] ?>" class="marcar-respondida">Marcar como Respondida</a>
-        <?php endif; ?>
-        <span class="divisor">|</span>
-        <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
-    </div>
-</td>
-
+                        <div class="acoes">
+                            <a href="respondidas.php?retornar=<?= $linha['id'] ?>" class="retornar">Não lida</a>
+                            <span class="divisor">|</span>
+                            <a href="respondidas.php?excluir=<?= $linha['id'] ?>" class="excluir" onclick="return confirm('Tem certeza que deseja excluir esta mensagem?')">Excluir</a>
+                        </div>
+                    </td>
                 </tr>
             <?php endwhile; ?>
         </tbody>
     </table>
+
+    
 
     <div class="paginacao">
         <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
             <a class="<?= $i === $pagina ? 'ativa' : '' ?>" href="?pagina=<?= $i ?>&busca=<?= urlencode($filtro) ?>"><?= $i ?></a>
         <?php endfor; ?>
     </div>
-    <!-- Botão para redirecionar para a página de Respondidas -->
-<div class=".ir-para-respondidas centralizar-botao">
-    <a href="respondidas.php" class="marcar-respondida2">Ir para Mensagens Respondidas</a>
-</div>
-
+    <a href="admin.php" class="marcar-respondida2">Voltar para Admin</a>
+ 
+    <script>
+    // Selecionar/deselecionar todos os checkboxes
+    document.getElementById('checkAll').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+    });
+</script>
 
 </body>
 </html>

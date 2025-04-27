@@ -241,3 +241,29 @@ footer .redes-sociais a:hover {
         width: 60px;
     }
 }
+@media (max-width: 768px) {
+    .produto-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .produto-container.reverse {
+        flex-direction: column;
+    }
+
+    .produto-imagem img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .produto-info {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    .btn-ver-mais {
+        margin-top: 20px;
+    }
+}
+
+

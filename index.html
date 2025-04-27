@@ -1,38 +1,300 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Conheça os melhores produtos e ofertas exclusivas para você! Compre fácil e rápido com atendimento via WhatsApp.">
+        <meta name="keywords" content="produtos, ofertas, descontos, loja online, comprar, promoção">
+        <meta name="author" content="Sua Empresa">
+        <meta name="robots" content="index, follow">       
     <title>Mercado</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="shortcut icon" href="img/atalho.png">
     <style>
+        /* Animação de fade e subida */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Aplicação da animação */
+.produto-container {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Quando o elemento aparecer */
+.produto-container.aparecendo {
+    opacity: 1;
+    transform: translateY(0);
+}
+
         /* Estilo do botão flutuante do WhatsApp */
-        .whatsapp-float-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #192844; /* Cor verde do WhatsApp */
-            border-radius: 50%;
-            padding: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            z-index: 1000; /* Garante que o botão fique sempre por cima do conteúdo */
-        }
+.whatsapp-float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #192844; /* Cor verde do WhatsApp */
+    border-radius: 50%;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 1000; /* Garante que o botão fique sempre por cima do conteúdo */
+}
 
-        .whatsapp-float-btn img {
-            width: 50px;
-            height: 50px;
-        }
+.whatsapp-float-btn img {
+    width: 50px;
+    height: 50px;
+}
 
-        .whatsapp-float-btn:hover {
-            background-color: #128C7E; /* Cor verde mais escuro no hover */
-            transform: scale(1.1); /* Dá um efeito de zoom ao passar o mouse */
-        }
+.whatsapp-float-btn:hover {
+    background-color: #128C7E; /* Cor verde mais escuro no hover */
+    transform: scale(1.1); /* Dá um efeito de zoom ao passar o mouse */
+}
+
+/* Media queries para responsividade */
+@media (max-width: 768px) {
+    .whatsapp-float-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 12px;
+    }
+
+    .whatsapp-float-btn img {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 480px) {
+    .whatsapp-float-btn {
+        bottom: 10px;
+        right: 10px;
+        padding: 10px;
+    }
+
+    .whatsapp-float-btn img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+        .produto-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 20px;
+    flex-wrap: wrap;
+}
+
+.produto-container.reverse {
+    flex-direction: row-reverse;
+}
+
+.produto-imagem img {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.produto-info {
+    max-width: 500px;
+}
+
+.produto-info h2 {
+    margin-bottom: 10px;
+}
+
+.produto-info p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+/* Estilo do botão "Ver mais" */
+.btn-ver-mais {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #192844;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-ver-mais:hover {
+    background-color: #128C7E;
+    transform: scale(1.05);
+}
+/* Estilo do botão "Comprar" */
+.btn-comprar {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #192844;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+}
+
+.btn-comprar:hover {
+    background-color: #128C7E;
+    transform: scale(1.05);
+}
+
+.formulario {
+    background-color: #f5f5f5;
+    padding: 50px 20px;
+    text-align: center;
+    border-radius: 12px;
+    margin: 50px auto;
+    max-width: 600px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.formulario h2 {
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.sub-texto {
+    font-size: 1em;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.input-grupo {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-grupo i {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #192844;
+}
+
+.input-grupo input,
+.input-grupo textarea {
+    width: 100%;
+    padding: 15px 15px 15px 45px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-grupo input:focus,
+.input-grupo textarea:focus {
+    border-color: #388E3C;
+    background-color: #e9f0fa;
+}
+
+.input-grupo textarea {
+    resize: none;
+    height: 120px;
+}
+
+.botao-enviar {
+    background-color: #388E3C;
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botao-enviar:hover {
+    background-color: #128C7E;
+    transform: scale(1.05);
+}
+.foto-container {
+    flex: 1;
+    display: flex;
+    flex-direction: row; /* Para que as fotos fiquem lado a lado */
+    justify-content: space-between; /* Espaço entre as imagens */
+    gap: 20px; /* Espaço entre as imagens */
+    align-items: center; /* Alinhamento vertical das imagens */
+}
+
+.foto-container .foto {
+    width: 30%; /* Controla a largura das imagens para ficarem lado a lado */
+    height: 300px; /* Padroniza a altura das imagens */
+    object-fit: cover; /* Garante que a imagem ocupe toda a área sem distorcer */
+    border-radius: 15px; /* Borda arredondada nas imagens */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Efeito de transição */
+}
+
+.foto-container .foto:hover {
+    transform: scale(1.05); /* Aumenta a imagem ao passar o mouse */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2); /* Aumenta a sombra ao passar o mouse */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .foto-container {
+        flex-direction: column; /* Em telas menores, as imagens ficam em coluna */
+        gap: 15px;
+    }
+
+    .foto-container .foto {
+        width: 80%; /* A largura das imagens aumenta para 80% em telas pequenas */
+        height: auto; /* A altura das imagens é ajustada automaticamente */
+    }
+}
+
+
+.foto-container .foto:nth-child(1) {
+    transition-delay: 0.1s; /* Adiciona um pequeno atraso entre as imagens */
+}
+
+.foto-container .foto:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.foto-container .foto:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .foto-container {
+        flex-direction: row;
+        gap: 15px;
+    }
+
+    .foto-container .foto {
+        width: 30%;
+    }
+}
+
     </style>
 </head>
 <body>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-XXXXX-Y');
+    </script>
     <header>
         <div class="header-conteudo">
             <img src="img/cliente.png" alt="Logo Mercado" class="logo">
@@ -61,28 +323,66 @@
     </section>
 
     <section class="produto">
-        <h2>Produto em Destaque</h2>
-        <img src="img/computer.png" alt="Produto em Destaque" class="imagem-produto">
-        <p>Este é o nosso produto especial, que está com uma promoção imperdível!</p>
-    
-        <!-- Botão gerado automaticamente via Mercado Pago -->
-        <script 
-            src="https://www.mercadopago.com.br/integrations/v1/web-payment-checkout.js"
-            data-preference-id="<?php echo $_GET['preference_id'] ?? ''; ?>"
-            data-button-label="Comprar">
-        </script>
+        <div class="produto-container">
+            <div class="produto-imagem">
+                <img src="img/computer.png" alt="Produto em Destaque" class="imagem-produto">
+            </div>
+            <div class="produto-info">
+                <h2>Produto em Destaque</h2>
+                <p>Este é o nosso produto especial, que está com uma promoção imperdível!</p> 
+                <a href="#" class="btn-ver-mais">Ver mais</a> 
+                
+            </div>
+        </div>
     </section>
     
-    <section class="formulario" id="formulario">
-        <h2>Fale Conosco</h2>
-        <form action="processa_formulario.php" method="POST">
-            <input type="text" name="nome" placeholder="Seu nome" class="campo-fixo" required>
-            <input type="email" name="email" placeholder="Seu e-mail" class="campo-fixo" required>
-            <input type="text" name="whatsapp" placeholder="Seu whatsapp" id="whatsapp" aria-placeholder="(DD)9999-9999" class="campo-fixo" required>
-            <textarea name="mensagem" class="mensagem-fixa" placeholder="Sua mensagem" required></textarea>
-            <button type="submit" class="botao-fixo">Enviar</button>
-        </form>
+    <section class="produto">
+        <div class="produto-container reverse">
+            <div class="produto-info">
+                <h2>Produto em Destaque</h2>
+                <p>Este é o nosso produto especial, que está com uma promoção imperdível!</p>
+                <a href="#" class="btn-ver-mais">Ver mais</a>   
+            </div>
+            <div class="produto-imagem">
+                <img src="img/computer.png" alt="Produto em Destaque" class="imagem-produto">
+            </div>
+        </div>
+    </section>  
+
+    
+    
+    <section class="foto-e-formulario" id="foto-e-formulario">
+        <div class="foto-container">
+            <img src="img/cliente.png" alt="Foto 1" class="foto">
+            <img src="img/cliente.png" alt="Foto 2" class="foto">
+            <img src="img/cliente.png" alt="Foto 3" class="foto">
+        </div>
+        <div class="formulario" id="formulario">
+            <h2>Vamos Conversar!</h2>
+            <p class="sub-texto">Preencha e receba uma resposta em minutos 🚀</p>
+            <form id="form-contato" action="processa_formulario.php" method="POST">
+                <div class="input-grupo">
+                    <i class="fas fa-user"></i>
+                    <input type="text" name="nome" placeholder="Seu nome" required>
+                </div>
+                <div class="input-grupo">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" placeholder="Seu e-mail" required>
+                </div>
+                <div class="input-grupo">
+                    <i class="fas fa-phone"></i>
+                    <input type="text" name="whatsapp" placeholder="Seu WhatsApp" required>
+                </div>
+                <div class="input-grupo">
+                    <i class="fas fa-comment-dots"></i>
+                    <textarea name="mensagem" placeholder="Sua mensagem" required></textarea>
+                </div>
+                <button type="submit" class="botao-enviar">🚀 Enviar agora</button>
+            </form>
+        </div>
     </section>
+    
+    
 
     <footer>
         <p>&copy; 2025 Mercado - Todos os direitos reservados</p>
@@ -109,7 +409,43 @@
     <a href="https://wa.me/5527999962716?text=Fale%20conosco" target="_blank" class="whatsapp-float-btn">
         <img src="img/whatsapp-icon.png" alt="WhatsApp">
     </a>
-
     <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const produtos = document.querySelectorAll('.produto-container');
+    
+            function verificarScroll() {
+                produtos.forEach(produto => {
+                    const rect = produto.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        produto.classList.add('aparecendo');
+                    }
+                });
+            }
+    
+            window.addEventListener('scroll', verificarScroll);
+            verificarScroll(); // Para ativar se já estiver visível
+        });
+    </script>
+    <script>
+        document.getElementById('form-contato').addEventListener('submit', function(e) {
+            e.preventDefault(); // impede o envio imediato do formulário
+        
+            const botao = document.querySelector('.botao-enviar');
+            botao.innerHTML = "Enviando... ⏳";
+            botao.disabled = true;
+        
+            setTimeout(() => {
+                botao.innerHTML = "🚀 Enviar agora";
+                botao.disabled = false;
+                // Aqui você pode enviar o formulário de verdade se quiser
+                this.submit(); // Se quiser que ele envie depois dos 3 segundos
+            }, 3000);
+        });
+        </script>
+       
+        
+        
+    
 </body>
 </html>

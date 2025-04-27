@@ -44,6 +44,16 @@ CREATE TABLE recuperacoes (
     codigo VARCHAR(6) NOT NULL,
     expira_em DATETIME NOT NULL
 );
+CREATE TABLE respondidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    whatsapp VARCHAR(20),
+    mensagem TEXT,
+    data_envio DATETIME NOT NULL,
+    data_resposta DATETIME NOT NULL
+);
+
 
 
 
