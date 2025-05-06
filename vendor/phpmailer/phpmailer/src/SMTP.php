@@ -279,7 +279,7 @@ class SMTP
      * @param string $str   Debug string to output
      * @param int    $level The debug level of this message; see DEBUG_* constants
      *
-     * @see SMTP::$Debugoutputa
+     * @see SMTP::$Debugoutput
      * @see SMTP::$do_debug
      */
     protected function edebug($str, $level = 0)

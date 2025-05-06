@@ -1,14 +1,9 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "ac5f9422d0523006f78657046692340d",
     "packages": [
         {
             "name": "monolog/monolog",
             "version": "3.9.0",
+            "version_normalized": "3.9.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
@@ -64,12 +59,14 @@
                 "rollbar/rollbar": "Allow sending log messages to Rollbar",
                 "ruflin/elastica": "Allow sending log messages to an Elastic Search server"
             },
+            "time": "2025-03-24T10:02:05+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-main": "3.x-dev"
                 }
             },
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Monolog\\": "src/Monolog"
@@ -107,11 +104,12 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-03-24T10:02:05+00:00"
+            "install-path": "../monolog/monolog"
         },
         {
             "name": "phpmailer/phpmailer",
             "version": "v6.10.0",
+            "version_normalized": "6.10.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
@@ -150,7 +148,9 @@
                 "symfony/polyfill-mbstring": "To support UTF-8 if the Mbstring PHP extension is not enabled (^1.2)",
                 "thenetworg/oauth2-azure": "Needed for Microsoft XOAUTH2 authentication"
             },
+            "time": "2025-04-24T15:19:31+00:00",
             "type": "library",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "PHPMailer\\PHPMailer\\": "src/"
@@ -188,11 +188,12 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-24T15:19:31+00:00"
+            "install-path": "../phpmailer/phpmailer"
         },
         {
             "name": "psr/log",
             "version": "3.0.2",
+            "version_normalized": "3.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
@@ -207,12 +208,14 @@
             "require": {
                 "php": ">=8.0.0"
             },
+            "time": "2024-09-11T13:17:53+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
                     "dev-master": "3.x-dev"
                 }
             },
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "Psr\\Log\\": "src"
@@ -238,16 +241,9 @@
             "support": {
                 "source": "https://github.com/php-fig/log/tree/3.0.2"
             },
-            "time": "2024-09-11T13:17:53+00:00"
+            "install-path": "../psr/log"
         }
     ],
-    "packages-dev": [],
-    "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {},
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "dev": true,
+    "dev-package-names": []
 }

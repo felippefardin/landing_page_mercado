@@ -4,9 +4,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
 
-require 'PHPMailer/PHPMailer-master/Exception.php';
-require 'PHPMailer/PHPMailer-master/PHPMailer.php';
-require 'PHPMailer/PHPMailer-master/SMTP.php';
+require 'PHPMailer/PHPMailer/Exception.php';
+require 'PHPMailer/PHPMailer/PHPMailer.php';
+require 'PHPMailer/PHPMailer/SMTP.php';
 
 // echo '<pre>';
 // print_r($_POST);
@@ -17,8 +17,8 @@ $conn = new mysqli("localhost", "root", "", "mercado");
 
 // Dados do formulário
 $email = $_POST['usuario'] ?? '';
+$email = trim($email);
 
-$email = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
 
 if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     die("Endereço de e-mail inválido.");
@@ -30,8 +30,14 @@ $codigo = rand(100000, 999999);
 $expira = date('d-m-Y H:i:s', strtotime('+10 minutes'));
 
 // Remove códigos antigos e insere novo
-$conn->query("DELETE FROM recuperacao_senha WHERE email = '$email'");
-$conn->query("INSERT INTO recuperacao_senha (email, codigo, expira_em) VALUES ('$email', '$codigo', '$expira')");
+$stmt = $conn->prepare("DELETE FROM recuperacao_senha WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+
+$stmt = $conn->prepare("INSERT INTO recuperacao_senha (email, codigo, expira_em) VALUES (?, ?, ?)");
+$stmt->bind_param("sss", $email, $codigo, $expira);
+$stmt->execute();
+
 
 // Configura o envio com PHPMailer
 $mail = new PHPMailer(true);
