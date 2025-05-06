@@ -250,6 +250,23 @@ if (isset($_GET['marcar_respondida'])) {
 .marcar-respondida2 {
     background-color: #008c44;
 }
+/* Estilo para o botão "Ver Perfil" */
+.btn-perfil {
+    display: inline-block;
+    background-color:  #007d3e; /* Cor do botão */
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-perfil:hover {
+    background-color: #45a049; /* Cor ao passar o mouse */
+}
+
 
 
     </style>
@@ -299,16 +316,16 @@ if (isset($_GET['marcar_respondida'])) {
                     <td><?= nl2br(htmlspecialchars($linha['mensagem'])) ?></td>
                     <td><?= $linha['data_envio'] ?></td>
                     <td>
-    <div class="acoes">
-        <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a>
-        <span class="divisor">|</span>
-        <?php if ($linha['respondida'] == 0): ?>
-            <a href="admin.php?marcar_respondida=<?= $linha['id'] ?>" class="marcar-respondida">Marcar como Respondida</a>
-        <?php endif; ?>
-        <span class="divisor">|</span>
-        <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
-    </div>
-</td>
+                            <div class="acoes">
+                                <a href="mailto:<?= htmlspecialchars($linha['email']) ?>?subject=Resposta%20da%20mensagem%20no%20Mercado&body=Olá%20<?= urlencode($linha['nome']) ?>,%0D%0A%0D%0AObrigado%20pela%20mensagem!%20Segue%20abaixo%20nossa%20resposta:%0D%0A%0D%0A" class="responder">Responder</a>
+                                <span class="divisor">|</span>
+                                <?php if ($linha['respondida'] == 0): ?>
+                                    <a href="admin.php?marcar_respondida=<?= $linha['id'] ?>" class="marcar-respondida">Marcar como Respondida</a>
+                                <?php endif; ?>
+                                <span class="divisor">|</span>
+                                <a class="excluir" href="admin.php?excluir=<?= $linha['id'] ?>" onclick="return confirm('Deseja realmente excluir?')">Excluir</a>
+                            </div>
+                        </td>
 
                 </tr>
             <?php endwhile; ?>
@@ -324,6 +341,10 @@ if (isset($_GET['marcar_respondida'])) {
 <div class=".ir-para-respondidas centralizar-botao">
     <a href="respondidas.php" class="marcar-respondida2">Ir para Mensagens Respondidas</a>
 </div>
+<!-- Botão para acessar o perfil -->
+<a href="perfil.php" class="btn-perfil">Ver Perfil</a>
+
+
 
 
 </body>

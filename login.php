@@ -5,6 +5,7 @@ $conn = new mysqli("localhost", "root", "", "mercado");
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
+    
 
     $query = "SELECT * FROM usuarios WHERE email = '$email'";
     $result = $conn->query($query);
@@ -46,10 +47,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="password" name="senha" placeholder="Sua senha" required>
             <button type="submit">Entrar</button>
             <p><a href="esqueci_senha.php">Esqueci minha senha?</a></p>
-
         </form>
 
         <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
+        
     </div>
 </body>
 </html>

@@ -6,6 +6,6 @@ define('DB_PASS', '');
 define('DB_NAME', 'mercado');
 
 // Configuração de e-mail
-define('EMAIL_FROM', 'seuemail@seudominio.com');
-define('EMAIL_TO', 'seurecebedor@seudominio.com');
+define('EMAIL_FROM', 'felippefardin@gmail.com');
+define('EMAIL_TO', 'felippefardimn@gmail.com');
 ?>

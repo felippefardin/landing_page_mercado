@@ -2,6 +2,7 @@
 session_start();
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 require 'PHPMailer/PHPMailer-master/Exception.php';
 require 'PHPMailer/PHPMailer-master/PHPMailer.php';
@@ -26,11 +27,11 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
 // Gera código e validade
 $codigo = rand(100000, 999999);
-$expira = date('Y-m-d H:i:s', strtotime('+10 minutes'));
+$expira = date('d-m-Y H:i:s', strtotime('+10 minutes'));
 
 // Remove códigos antigos e insere novo
-$conn->query("DELETE FROM recuperacoes WHERE email = '$email'");
-$conn->query("INSERT INTO recuperacoes (email, codigo, expira_em) VALUES ('$email', '$codigo', '$expira')");
+$conn->query("DELETE FROM recuperacao_senha WHERE email = '$email'");
+$conn->query("INSERT INTO recuperacao_senha (email, codigo, expira_em) VALUES ('$email', '$codigo', '$expira')");
 
 // Configura o envio com PHPMailer
 $mail = new PHPMailer(true);
@@ -39,7 +40,7 @@ try {
     $mail->Host = 'smtp.gmail.com';  // Servidor SMTP do Outlook (Hotmail)
     $mail->SMTPAuth = true;
     $mail->Username = 'felippefardin@gmail.com';  // Seu e-mail
-    $mail->Password = 'hhkthilhkoeibera';  // Sua senha
+    $mail->Password = 'uooypktvklcxktnb';  // Sua senha
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;                      // ou 465 se for SSL
 

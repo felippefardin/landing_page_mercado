@@ -21,7 +21,7 @@ CREATE TABLE recuperacao_senha (
     email VARCHAR(255) NOT NULL,
     codigo VARCHAR(6) NOT NULL,
     expira_em DATETIME NOT NULL,
-    usado BOOLEAN DEFAULT 0
+    criado_em DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS formularios (

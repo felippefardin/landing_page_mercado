@@ -69,11 +69,11 @@ if (!isset($_POST['codigo'])) {
 }
 
 // Se o código foi enviado, processa a verificação
-$email = $_SESSION['recupera_email'] ?? null;
+$usuario_id = $_SESSION['redefinir_id'] ?? null; // Alterado para 'redefinir_id', que é o ID do usuário
 $codigo = $_POST['codigo'];
 
-if (!$email) {
-    echo "Sessão expirada ou e-mail não definido.";
+if (!$usuario_id) {
+    echo "Sessão expirada ou usuário não definido.";
     exit;
 }
 
@@ -83,10 +83,11 @@ if ($conn->connect_error) {
     die("Erro na conexão com o banco de dados: " . $conn->connect_error);
 }
 
-$email = $conn->real_escape_string($email);
+$usuario_id = $conn->real_escape_string($usuario_id);
 $codigo = $conn->real_escape_string($codigo);
 
-$result = $conn->query("SELECT * FROM recuperacoes WHERE email = '$email' AND codigo = '$codigo'");
+// Alteração: Agora busca pelo usuario_id e código
+$result = $conn->query("SELECT * FROM recuperacao_senha WHERE usuario_id = '$usuario_id' AND codigo_recuperacao = '$codigo'");
 
 if ($result && $result->num_rows === 1) {
     $linha = $result->fetch_assoc();

@@ -5,14 +5,29 @@ $conn = new mysqli("localhost", "root", "", "mercado");
 $mensagem = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $entrada = $conn->real_escape_string($_POST['email_telefone']);
+    $entrada = $conn->real_escape_string($_POST['email']);
 
-    $resultado = $conn->query("SELECT * FROM usuarios WHERE email = '$entrada' OR telefone = '$entrada'");
+    // Consulta para verificar se o e-mail existe no banco
+    $resultado = $conn->query("SELECT * FROM usuarios WHERE email = '$entrada'");
     if ($resultado->num_rows > 0) {
         $usuario = $resultado->fetch_assoc();
         $_SESSION['redefinir_id'] = $usuario['id'];
-        header("Location: redefinir_senha.php");
-        exit;
+
+        // Gerando um código de recuperação aleatório (pode ser numérico ou alfanumérico)
+        $codigo_recuperacao = mt_rand(100000, 999999); // Código de 6 dígitos
+
+        // Inserindo o código na tabela recuperacao_senha
+        $sql = "INSERT INTO recuperacao_senha (usuario_id, codigo_recuperacao, data_solicitacao)
+                VALUES ('" . $usuario['id'] . "', '$codigo_recuperacao', NOW())";
+
+        if ($conn->query($sql) === TRUE) {
+            // Se a inserção for bem-sucedida, redireciona para a página de verificação
+            header("Location: verificar_codigo.php");
+            exit;
+        } else {
+            $mensagem = "Erro ao gerar o código de recuperação.";
+        }
+
     } else {
         $mensagem = "Nenhum usuário encontrado com esse e-mail ou telefone.";
     }
@@ -25,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <title>Recuperar Senha</title>
     <style>
+        /* Estilos para a página */
         body {
             margin: 0;
             padding: 0;
@@ -87,8 +103,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h2>Esqueci minha senha</h2>
         <?php if ($mensagem) echo "<p>$mensagem</p>"; ?>
         <form method="POST" action="">
-            <label for="usuario">Digite seu e-mail ou telefone:</label>
-            <input type="text" id="usuario" name="email_telefone" required>
+            <label for="usuario">Digite seu e-mail:</label>
+            <input type="text" id="usuario" name="email" required>
             <button type="submit">Enviar código</button>
         </form>
     </div>
