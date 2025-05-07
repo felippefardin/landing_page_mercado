@@ -1,5 +1,8 @@
 <?php
 session_start();
+echo "Email recebido: " . $_POST['usuario'];
+
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -17,6 +20,7 @@ $conn = new mysqli("localhost", "root", "", "mercado");
 
 // Dados do formulário
 $email = $_POST['usuario'] ?? '';
+
 $email = trim($email);
 
 
@@ -41,27 +45,41 @@ $stmt->execute();
 
 // Configura o envio com PHPMailer
 $mail = new PHPMailer(true);
-try {
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';  // Servidor SMTP do Outlook (Hotmail)
-    $mail->SMTPAuth = true;
-    $mail->Username = 'felippefardin@gmail.com';  // Seu e-mail
-    $mail->Password = 'uooypktvklcxktnb';  // Sua senha
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port = 587;                      // ou 465 se for SSL
 
-    $mail->setFrom('felippefardin@gmail.com', 'Recuperação de Senha'); // 🔁 Altere
-    $mail->addAddress($email);
+try {
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER; // Mostra debug completo
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
+
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'felippefardin@gmail.com';
+    $mail->Password = 'uooy pktv klcx ktnb';
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->Port = 587;
+
+    $mail->setFrom('felippefardin@gmail.com', 'Recuperação de Senha');
+    $mail->addAddress($email); // Verifique o valor de $email
     $mail->isHTML(true);
     $mail->Subject = 'Seu código de verificação';
     $mail->Body = "<p>Seu código de verificação é: <strong>$codigo</strong></p><p>Ele expira em 10 minutos.</p>";
+
+    echo "<pre>";
+    echo "Preparando para enviar e-mail para: $email\n";
+    echo "Código gerado: $codigo\n";
+    echo "Expira em: $expira\n";
+    echo "</pre>";
 
     $mail->send();
 
     $_SESSION['recupera_email'] = $email;
     header("Location: verificar_codigo.php");
     exit;
-
 } catch (Exception $e) {
-    echo "Erro ao enviar e-mail: {$mail->ErrorInfo}";
+    echo "<p><strong>Erro ao enviar e-mail:</strong> {$mail->ErrorInfo}</p>";
+    echo "<pre>";
+    print_r($e);
+    echo "</pre>";
 }

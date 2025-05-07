@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="email" name="email" placeholder="Seu e-mail" required>
             <input type="password" name="senha" placeholder="Sua senha" required>
             <button type="submit">Entrar</button>
-            <p><a href="esqueci_senha.php">Esqueci minha senha?</a></p>
+            <p><a href="formulario_teste.php">Esqueci minha senha?</a></p>
         </form>
 
         <p>Não tem uma conta? <a href="cadastro.php">Cadastre-se</a></p>
