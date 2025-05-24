@@ -1,76 +1,49 @@
 <?php
 session_start();
-if (!isset($_SESSION['validado']) || $_SESSION['validado'] !== true) {
-    echo "Acesso não autorizado.";
+if (!isset($_SESSION['recupera_email'])) {
+    header("Location: esqueci_senha.php");
     exit;
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Nova Senha - Mercado</title>
+    <title>Nova Senha</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .nova-senha {
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .nova-senha h2 {
-            margin-bottom: 24px;
-        }
-
-        .nova-senha input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        .nova-senha button {
-            padding: 12px 24px;
-            font-size: 16px;
-            background-color: #2a9d8f;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-
-        .nova-senha button:hover {
-            background-color: #21867a;
-        }
+        body { font-family: Arial, sans-serif; padding: 40px; max-width: 400px; margin: auto; }
+        input { width: 100%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; }
+        button {  padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <section class="nova-senha">
-        <h2>Definir Nova Senha</h2>
-        <form action="salvar_senha.php" method="POST">
-            <input type="password" name="nova_senha" placeholder="Nova senha" required>
-            <input type="password" name="confirmar_senha" placeholder="Confirme a nova senha" required>
-            <button type="submit">Salvar nova senha</button>
-        </form>
-    </section>
+    <h2>Defina sua nova senha</h2>
+    <form method="POST" action="atualizar_senha.php">
+        <input type="password" name="nova_senha" id="nova_senha" placeholder="Nova senha" required oninput="avaliarForca()">
+        <div id="forca_senha" style="height: 10px; width: 100%; background: #e0e0e0; border-radius: 5px; margin-top: 5px;">
+            <div id="barra_forca" style="height: 100%; width: 0%; background: red; border-radius: 5px;"></div>
+        </div>
+        <button type="submit">Atualizar Senha</button>
+    </form>
+
+    <script>
+        function avaliarForca() {
+            const senha = document.getElementById("nova_senha").value;
+            const barra = document.getElementById("barra_forca");
+
+            let forca = 0;
+            if (senha.length >= 6) forca += 1;
+            if (/[A-Z]/.test(senha)) forca += 1;
+            if (/[0-9]/.test(senha)) forca += 1;
+            if (/[^A-Za-z0-9]/.test(senha)) forca += 1;
+
+            const cores = ['red', 'orange', 'gold', 'green'];
+            const larguras = ['25%', '50%', '75%', '100%'];
+
+            barra.style.width = larguras[forca - 1] || '0%';
+            barra.style.backgroundColor = cores[forca - 1] || 'transparent';
+        }
+    </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="shortcut icon" href="img/atalho.png">
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     
      <title>Mercado</title>
      </head>
     <style>
@@ -292,8 +292,43 @@
 .user-icon:hover {
   transform: scale(1.3);
 }
+.whatsapp-float-btn {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: slideIn 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
 
+.whatsapp-float-btn img {
+  width: 30px;
+  height: 30px;
+}
 
+.whatsapp-float-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Animação de entrada */
+@keyframes slideIn {
+  0% {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
     .foto-container {
@@ -306,7 +341,7 @@
     }
 }
 
-    </style>
+ </style>
 
 <body>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXX-Y"></script>
@@ -330,11 +365,11 @@
                 <a href="#formulario" class="btn btn-destaque">Conheça Agora</a>
             </div>
         </div>
-       <div class="user-icon">
+       <!-- <div class="user-icon">
   <a href="login.php">
     <i class="fas fa-user"></i>
   </a>
-</div>
+</div> -->
 
     </header>
 
@@ -381,12 +416,18 @@
     <section class="foto-e-formulario" id="foto-e-formulario">
         <div class="foto-container">
             <img src="img/cliente.png" alt="Foto 1" class="foto">
-            <img src="img/cliente.png" alt="Foto 2" class="foto">
+             <!-- <a href="https://wa.me/5599999999999" target="_blank">
+  <video class="foto-container" autoplay muted loop playsinline onclick="this.muted = false; this.play();" style="cursor: pointer;">
+    <source src="videos/cliente-video.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo.
+  </video>
+</a> -->
+            <img src="img/cliente.png" alt="Foto 3" class="foto">
             <img src="img/cliente.png" alt="Foto 3" class="foto">
         </div>
         <div class="formulario" id="formulario">
             <h2>Vamos Conversar!</h2>
-            <p class="sub-texto">Preencha e receba uma resposta em minutos 🚀</p>
+            <p class="sub-texto">Preencha e receba uma resposta em minutos</p>
             <form id="form-contato" action="processa_formulario.php" method="POST">
                 <div class="input-grupo">
                     <i class="fas fa-user"></i>
@@ -404,7 +445,7 @@
                     <i class="fas fa-comment-dots"></i>
                     <textarea name="mensagem" placeholder="Sua mensagem" required></textarea>
                 </div>
-                <button type="submit" class="botao-enviar">🚀 Enviar agora</button>
+                <button type="submit" class="botao-enviar">Enviar agora</button>
             </form>
         </div>
     </section>
@@ -433,9 +474,15 @@
     </footer>
 
     <!-- Botão flutuante do WhatsApp -->
-    <a href="https://wa.me/5527999962716?text=Fale%20conosco" target="_blank" class="whatsapp-float-btn">
-        <img src="img/whatsapp-icon.png" alt="WhatsApp">
-    </a>
+    <a href="https://wa.me/5511999999999" 
+   class="whatsapp-float-btn" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Fale conosco no WhatsApp">
+  <img src="img/whatsapp-icon.png" alt="WhatsApp">
+</a>
+
+
     <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -469,6 +516,22 @@
                 this.submit(); // Se quiser que ele envie depois dos 3 segundos
             }, 3000);
         });
+        document.addEventListener("DOMContentLoaded", function() {
+    const produtos = document.querySelectorAll(".produto-container");
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("aparecendo");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    produtos.forEach(produto => {
+      observer.observe(produto);
+    });
+  });
         </script>
        
         

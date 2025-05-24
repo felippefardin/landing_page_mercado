@@ -38,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="container">
         <h2>Login</h2>
 
+        <?php if (isset($_GET['msg']) && $_GET['msg'] === 'senha_atualizada'): ?>
+    <p style="color: green;">Senha atualizada com sucesso! Faça login abaixo.</p>
+<?php endif; ?>
+
         <?php if (!empty($erro)) : ?>
             <p class="error"><?= $erro ?></p>
         <?php endif; ?>
