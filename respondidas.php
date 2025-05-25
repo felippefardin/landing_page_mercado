@@ -160,47 +160,81 @@ if (isset($_GET['excluir'])) {
 .acoes a:hover {
     background-color: #f1f1f1;
 }   
-.marcar-respondida2 {
-    display: inline-block;
-    background-color: #00a859;
-    color: white;
-    text-decoration: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, transform 0.3s ease;
+
+/* Container alinhado à direita */
+.dropdown-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
 }
 
-.marcar-respondida2:hover {
-    background-color: #009a4f;
-    transform: translateY(-2px);
-}
-.marcar-respondida2:active {
-    background-color: #007d3e;
-    transform: translateY(0);
-}
-.marcar-respondida2 {
-    display: inline-block;
-    background-color: #00a859;
-    color: white;
-    padding: 8px 12px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-    text-align: center;
+/* Botão visível */
+.dropdown {
+  position: relative;
+  display: inline-block;
 }
 
-.marcar-respondida2 {
-    background-color: #008c44;
+.dropbtn {
+  background-color: #007d3e;
+  color: white;
+  padding: 10px 16px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
 }
+
+/* Conteúdo oculto até hover */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Estilo dos links internos */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background 0.2s;
+}
+
+/* Efeito hover nos links */
+.dropdown-content a:hover {
+  background-color: #007d3e;
+  color: white;
+}
+
+/* Mostra o menu quando passa o mouse */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 
     </style>
 </head>
 <body>
 
-<a href="logout.php" class="logout">Sair</a>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+     <div class="dropdown-container">
+    <div class="dropdown">
+      <button class="dropbtn"> Conta  <i class="fa fa-arrow-down"></i> </button>
+      <div class="dropdown-content">
+        <a href="perfil.php"><i class="fa fa-user"></i>  Perfil</a>
+        <a href="admin.php"><i class="fa fa-message"></i>  Mensagens não respondida</a>
+        <a href="dashboard.php"><i class="fa fa-tachometer"></i>  Dashboard</a> 
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i>  Sair</a>
+      </div>
+    </div>
+  </div>
     <h1>Olá, <?= ucwords(strtolower($_SESSION['usuario'])) ?>!</h1>
     <h2>Mensagens Recebidas</h2>
 
@@ -247,8 +281,7 @@ if (isset($_GET['excluir'])) {
             <a class="<?= $i === $pagina ? 'ativa' : '' ?>" href="?pagina=<?= $i ?>&busca=<?= urlencode($filtro) ?>"><?= $i ?></a>
         <?php endfor; ?>
     </div>
-    <a href="admin.php" class="marcar-respondida2">Voltar para Admin</a>
- 
+    
     <script>
     // Selecionar/deselecionar todos os checkboxes
     document.getElementById('checkAll').addEventListener('change', function() {

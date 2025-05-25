@@ -2,7 +2,7 @@
 session_start();
 $conn = new mysqli("localhost", "root", "", "mercado");
 
-
+$mensagem = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = $_SESSION['recupera_email'];
@@ -16,24 +16,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
+        $mensagem = "Código válido! Você será redirecionado em instantes...";
         $_SESSION['validado'] = true;
-        header("Location: nova_senha.php");
-        exit;
+        // não redirecionamos imediatamente, deixamos o JS fazer isso após 2 segundos
     } else {
-        $erro = "Código inválido ou expirado.";
+        $mensagem = "Código inválido ou expirado.";
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"><title>Verificar Código</title></head>
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Código</title>
+    <?php if ($mensagem === "Código válido! Você será redirecionado em instantes...") : ?>
+    <script>
+        setTimeout(function() {
+            window.location.href = "nova_senha.php";
+        }, 2000);
+    </script>
+    <?php endif; ?>
+</head>
 <body>
     <h2>Digite o Código</h2>
-    <?php if (isset($erro)) echo "<p style='color:red;'>$erro</p>"; ?>
+
+    <?php 
+    if (!empty($mensagem)) {
+        $cor = ($mensagem === "Código válido! Você será redirecionado em instantes...") ? "green" : "red";
+        echo "<p style='color: $cor;'>$mensagem</p>";
+    }
+    ?>
+
+    <?php if ($mensagem !== "Código válido! Você será redirecionado em instantes...") : ?>
     <form method="POST">
         <input type="text" name="codigo" placeholder="Código de 6 dígitos" required>
         <button type="submit">Verificar</button>
     </form>
+    <?php endif; ?>
+
 </body>
 </html>

@@ -15,6 +15,12 @@ CREATE TABLE usuarios (
     email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL
 );
+CREATE TABLE IF NOT EXISTS imagens_site (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo VARCHAR(50) UNIQUE,
+    caminho VARCHAR(255) NOT NULL
+);
+
 
 CREATE TABLE recuperacao_senha (
     id INT AUTO_INCREMENT PRIMARY KEY,

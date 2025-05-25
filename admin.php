@@ -53,10 +53,6 @@ if (isset($_GET['marcar_respondida'])) {
 
     exit;
 }
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -266,14 +262,99 @@ if (isset($_GET['marcar_respondida'])) {
 .btn-perfil:hover {
     background-color: #45a049; /* Cor ao passar o mouse */
 }
+.top-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.top-buttons a {
+    text-decoration: none;
+    font-weight: bold;
+}
+/* Container alinhado à direita */
+.dropdown-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+/* Botão visível */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #007d3e;
+  color: white;
+  padding: 10px 16px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Conteúdo oculto até hover */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Estilo dos links internos */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background 0.2s;
+}
+
+/* Efeito hover nos links */
+.dropdown-content a:hover {
+  background-color: #007d3e;
+  color: white;
+}
+
+/* Mostra o menu quando passa o mouse */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
 
 
 
     </style>
 </head>
 <body>
+    <!-- CDN do Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+     <div class="dropdown-container">
+    <div class="dropdown">
+      <button class="dropbtn"> Conta  <i class="fa fa-arrow-down"></i> </button>
+      <div class="dropdown-content">
+        <a href="perfil.php"><i class="fa fa-user"></i>  Perfil</a>
+        <a href="respondidas.php"><i class="fa fa-message"></i>  Mensagens Respondidas</a>
+        <a href="dashboard.php"><i class="fa fa-tachometer"></i>  Dashboard</a> 
+        <a href="logout.php"><i class="fas fa-sign-out-alt"></i>  Sair</a>
+      </div>
+    </div>
+  </div>
+    <!-- <div class="top-buttons">
+    <a href="perfil.php" class="btn-perfil">Ver Perfil</a>
+    <a href="respondidas.php" class="marcar-respondida2">Mensagens Respondidas</a>
     <a href="logout.php" class="logout">Sair</a>
+</div> -->
+
     <h1>Bem-vindo, <?= ucwords(strtolower($_SESSION['usuario'])) ?>!</h1>
     <h2>Mensagens Recebidas</h2>
 
@@ -338,11 +419,7 @@ if (isset($_GET['marcar_respondida'])) {
         <?php endfor; ?>
     </div>
     <!-- Botão para redirecionar para a página de Respondidas -->
-<div class=".ir-para-respondidas centralizar-botao">
-    <a href="respondidas.php" class="marcar-respondida2">Ir para Mensagens Respondidas</a>
-</div>
-<!-- Botão para acessar o perfil -->
-<a href="perfil.php" class="btn-perfil">Ver Perfil</a>
+
 
 
 
