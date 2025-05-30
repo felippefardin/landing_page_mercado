@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitbfaff0670adfff9946982189101ae32e
 {
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'Twilio\\' => 7,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -19,6 +23,10 @@ class ComposerStaticInitbfaff0670adfff9946982189101ae32e
     );
 
     public static $prefixDirsPsr4 = array (
+        'Twilio\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twilio/sdk/src/Twilio',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',

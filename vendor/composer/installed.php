@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-felippefardin',
         'version' => 'dev-felippefardin',
-        'reference' => 'f80e96871b4eca85be0002cd1729e4180ab041e3',
+        'reference' => 'd08fa45166dccf50a3b6414242fdb7864a2e3b54',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-felippefardin',
             'version' => 'dev-felippefardin',
-            'reference' => 'f80e96871b4eca85be0002cd1729e4180ab041e3',
+            'reference' => 'd08fa45166dccf50a3b6414242fdb7864a2e3b54',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -51,6 +51,15 @@
             'provided' => array(
                 0 => '3.0.0',
             ),
+        ),
+        'twilio/sdk' => array(
+            'pretty_version' => '8.6.2',
+            'version' => '8.6.2.0',
+            'reference' => 'b9c2b44392727bb22ee99d5972e7cbe361036fcc',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../twilio/sdk',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
     ),
 );
